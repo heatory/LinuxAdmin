@@ -17,7 +17,7 @@
 Первым делом была развернута виртуальная машина на Ubuntu 20.04
 Далее были добавлены в систему 4 виртуальных диска.
 
-![Добавленные носители в систему](https://github.com/heatory/LinuxAdmin/blob/master/homework4/info_disks.png "Добавленные носители в систему")
+![Добавленные носители в систему](https://github.com/heatory/LinuxAdmin/blob/master/homework4/infodisks.png "Добавленные носители в систему")
 
 Установлен пакет `mdadm` командой `sudo apt install mdadm`
 
@@ -32,7 +32,6 @@ sudo mdadm --detail /dev/md0
 ```
 
 Состояние RAID, обнаруженных в системе:
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/cat_start.png "")
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/info_start.png "")
 
@@ -50,10 +49,9 @@ sudo mdadm --detail /dev/md127
 
 Состояние второго диска - "***removed***".
 
-Восстанавление структуры:
+Восстанавении структуры:
 
 Добавляем диск, и узнаём его имя:
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/add_disk.png "")
 
 Добавляем диск в массив следующими командами:
@@ -66,26 +64,21 @@ sudo mdadm --detail /dev/md127
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/add_disk_mdadm.png "")
 
 Получаем:
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/mdadm_info_after_add.png "")
 
 
 Создадим конфигурационный файл командой `sudo mdadm --detail --scan > /etc/mdadm/mdadm.conf` и выполняем остановку и запуск RAID-массива (номер с 127 сменился на 0, потому что что-то пошло не так, и пришлось произвести все предыдущие действия с нуля): 
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/after_stop.png "")
 
 Перезагружаем машину. 
 
 Результат команды `lsblk` после перезагрузки (номер опять с 0 сменился на 127): 
-
-![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/lsblk_after_restart.png "")
+![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/lsbkl_after_restart.png "")
 
 Теперь создадим файловую систему с помощью команды `sudo fdisk /dev/md127`
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/create_file_system.png "")
 
 Создадим  файловую систему, для этого воспользуемся командой `sudo mkfs.ext4 /dev/md127p1`
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/create_file_system2.png "")
 
 Отредактируем файл `/etc/fstab` добавив строку следующего вида: `UUID=<UUID>	/mnt	ext4	defaults	0	0`
@@ -93,7 +86,6 @@ sudo mdadm --detail /dev/md127
 Для того, чтобы узнать UUID диска используем - `sudo blkid /dev/md127p1`.
 
 В результате получили вот это:
-
 ![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/for_mount.png "")
 
 Далее монтируем командой `mount -a` и проверяем (`mount`):
