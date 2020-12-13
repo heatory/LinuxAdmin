@@ -78,7 +78,7 @@ sudo mdadm --detail /dev/md127
 
 Результат команды `lsblk` после перезагрузки (номер опять с 0 сменился на 127): 
 
-![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/lsbkl_after_restart.png "")
+![](https://github.com/heatory/LinuxAdmin/blob/master/homework4/lsblk_after_restart.png "")
 
 Теперь создадим файловую систему с помощью команды `sudo fdisk /dev/md127`
 
